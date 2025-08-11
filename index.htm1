@@ -1,72 +1,156 @@
-import pygame
-import random
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>خالد المزيني — Portfolio</title>
+  <meta name="description" content="موقع شخصي لخالد المزيني — سيرته، مشاريعه وطرق التواصل." />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8;--text:#e6eef6}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, 'Segoe UI', Tahoma, sans-serif;background:linear-gradient(180deg,var(--bg),#071024);color:var(--text);}
+    a{color:var(--accent);text-decoration:none}
+    .container{max-width:1000px;margin:40px auto;padding:24px}
 
-# تهيئة pygame
-pygame.init()
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:4px 0 0;color:var(--muted)}
 
-# إعدادات الشاشة
-WIDTH, HEIGHT = 800, 600
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("🎮 لعبة التقاط الدوائر")
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:20px;border-radius:14px;box-shadow:0 6px 18px rgba(2,6,23,0.6);margin-top:20px}
 
-# ألوان
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-BLUE = (0, 0, 255)
+    .hero{display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+    .hero-left{flex:1;min-width:260px}
+    .hero-right{width:220px;height:220px;border-radius:12px;background:linear-gradient(135deg,#02223366,#00112266);display:flex;align-items:center;justify-content:center}
+    .avatar{width:180px;height:180px;border-radius:10px;background-image:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-size:42px}
 
-# إعدادات اللاعب
-player_size = 50
-player_x = WIDTH // 2
-player_y = HEIGHT // 2
-player_speed = 5
+    nav ul{display:flex;gap:12px;list-style:none;padding:0;margin:0}
+    nav a{padding:8px 12px;border-radius:8px;background:transparent}
+    nav a:hover{background:rgba(255,255,255,0.03)}
 
-# إعدادات الهدف (الدائرة)
-circle_radius = 20
-circle_x = random.randint(circle_radius, WIDTH - circle_radius)
-circle_y = random.randint(circle_radius, HEIGHT - circle_radius)
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}
+    .project{padding:14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)}
+    .project h3{margin:0 0 8px}
+    .project p{margin:0;color:var(--muted);font-size:14px}
 
-# النقاط
-score = 0
-font = pygame.font.SysFont(None, 40)
+    footer{margin-top:28px;color:var(--muted);font-size:14px;display:flex;justify-content:space-between;align-items:center}
 
-# حلقة اللعبة
-running = True
-clock = pygame.time.Clock()
+    /* responsive */
+    @media (max-width:800px){.grid{grid-template-columns:1fr}.hero-right{width:160px;height:160px}.avatar{width:130px;height:130px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">خ</div>
+        <div>
+          <h1>خالد المزيني</h1>
+          <p class="lead">مطور وبرمجيّات — محفظة مشاريع شخصية</p>
+        </div>
+      </div>
 
-while running:
-    clock.tick(60)  # 60 إطار في الثانية
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+      <nav>
+        <ul>
+          <li><a href="#about">عنّي</a></li>
+          <li><a href="#projects">المشاريع</a></li>
+          <li><a href="#contact">تواصل</a></li>
+          <li><a href="#" id="github-link">GitHub</a></li>
+        </ul>
+      </nav>
+    </header>
 
-    # التحكم بالمربع
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]:
-        player_x -= player_speed
-    if keys[pygame.K_RIGHT]:
-        player_x += player_speed
-    if keys[pygame.K_UP]:
-        player_y -= player_speed
-    if keys[pygame.K_DOWN]:
-        player_y += player_speed
+    <main>
+      <section class="card hero" id="home">
+        <div class="hero-left">
+          <h2>مرحباً — أنا خالد</h2>
+          <p class="lead">أهتم بتطوير الواجهات الأمامية وبرمجة بايثون وتطبيقات الويب. هنا بعض المشاريع والأفكار التي اشتغلت عليها.</p>
 
-    # حدود الشاشة
-    player_x = max(0, min(WIDTH - player_size, player_x))
-    player_y = max(0, min(HEIGHT - player_size, player_y))
+          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+            <a href="#projects" style="background:var(--accent);color:#021023;padding:10px 14px;border-radius:8px;font-weight:600">عرض مشاريعي</a>
+            <a href="#contact" style="border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:8px">أرسل رسالة</a>
+          </div>
+        </div>
 
-    # التحقق من الاصطدام
-    if (player_x < circle_x < player_x + player_size and
-        player_y < circle_y < player_y + player_size):
-        score += 1
-        circle_x = random.randint(circle_radius, WIDTH - circle_radius)
-        circle_y = random.randint(circle_radius, HEIGHT - circle_radius)
+        <div class="hero-right">
+          <div class="avatar">KM</div>
+        </div>
+      </section>
 
-    # الرسم
-    screen.fill(WHITE)
-    pygame.draw.rect(screen, BLUE, (player_x, player_y, player_size, player_size))
-    pygame.draw.circle(screen, RED, (circle_x, circle_y), circle_radius)
-    score_text = font.render(f"النقاط: {score}", True, (0, 0, 0))
-    screen.blit(score_text, (10, 10))
-    pygame.display.flip()
+      <section id="about" class="card">
+        <h3>عنّي</h3>
+        <p style="color:var(--muted);margin-top:8px;line-height:1.6">مطور ويب ومهتم بحلول واجهة المستخدم وتجربة المستخدم. أعمل مع HTML، CSS، JavaScript، وبعض أطر بايثون لبناء أدوات خلفية وخدمات. أحب تبسيط المشاكل وكتابة كود نظيف وسهل الصيانة.</p>
+      </section>
 
-pygame.quit()
+      <section id="projects" class="card">
+        <h3>مشاريعي</h3>
+        <div class="grid" style="margin-top:12px">
+          <article class="project">
+            <h3>مشروع 1 — موقع شخصي</h3>
+            <p>موقع ثابت لـتعريف السيرة الذاتية وعرض مشاريع صغيرة. مناسب للنشر على GitHub Pages.</p>
+            <div style="margin-top:8px"><a href="#">رابط المشروع</a></div>
+          </article>
+
+          <article class="project">
+            <h3>مشروع 2 — أداة بايثون</h3>
+            <p>أداة سطر الأوامر لمعالجة بيانات أوتوماتيكية. تتضمن README وملف requirements.</p>
+            <div style="margin-top:8px"><a href="#">رابط المشروع</a></div>
+          </article>
+
+          <article class="project">
+            <h3>مشروع 3 — لعبة بسيطة</h3>
+            <p>لعبة مبنية بـpygame، قابلة للتشغيل محلياً ومرفوعة في الريبو كمجلد game/.</p>
+            <div style="margin-top:8px"><a href="#">رابط المشروع</a></div>
+          </article>
+
+          <article class="project">
+            <h3>مشروع 4 — API بسيط</h3>
+            <p>خدمة REST صغيرة باستخدام Flask أو FastAPI مع مثال نشر وملف Dockerfile.</p>
+            <div style="margin-top:8px"><a href="#">رابط المشروع</a></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="card">
+        <h3>تواصل</h3>
+        <p class="lead" style="margin-top:8px">مهتم بتعاون أو ترغب في الاطلاع على الكود؟ تواصل معي عبر:</p>
+        <ul style="margin-top:8px;color:var(--muted)">
+          <li>البريد: <a href="mailto:your.email@example.com">your.email@example.com</a></li>
+          <li>GitHub: <a href="#" id="gh">github.com/khaled-almozini</a></li>
+        </ul>
+      </section>
+
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> خالد المزيني</div>
+      <div>Built with ❤ • <a href="#">GitHub</a></div>
+    </footer>
+  </div>
+
+  <script>
+    // تحديث السنة تلقائياً
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // روابط افتراضية - حدثها للريبو الحقيقي
+    const ghLink = document.getElementById('github-link');
+    const ghShort = document.getElementById('gh');
+    const repo = 'https://github.com/khaled-almozini';
+    ghLink.href = repo;
+    ghShort.href = repo;
+
+    // صغير: smooth scroll للأقسام
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const href = a.getAttribute('href');
+        if(href.startsWith('#')){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      });
+    });
+  </script>
+</body>
+</html>
