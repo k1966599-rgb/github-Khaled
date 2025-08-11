@@ -1,0 +1,72 @@
+import pygame
+import random
+
+# تهيئة pygame
+pygame.init()
+
+# إعدادات الشاشة
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("🎮 لعبة التقاط الدوائر")
+
+# ألوان
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
+
+# إعدادات اللاعب
+player_size = 50
+player_x = WIDTH // 2
+player_y = HEIGHT // 2
+player_speed = 5
+
+# إعدادات الهدف (الدائرة)
+circle_radius = 20
+circle_x = random.randint(circle_radius, WIDTH - circle_radius)
+circle_y = random.randint(circle_radius, HEIGHT - circle_radius)
+
+# النقاط
+score = 0
+font = pygame.font.SysFont(None, 40)
+
+# حلقة اللعبة
+running = True
+clock = pygame.time.Clock()
+
+while running:
+    clock.tick(60)  # 60 إطار في الثانية
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # التحكم بالمربع
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        player_x -= player_speed
+    if keys[pygame.K_RIGHT]:
+        player_x += player_speed
+    if keys[pygame.K_UP]:
+        player_y -= player_speed
+    if keys[pygame.K_DOWN]:
+        player_y += player_speed
+
+    # حدود الشاشة
+    player_x = max(0, min(WIDTH - player_size, player_x))
+    player_y = max(0, min(HEIGHT - player_size, player_y))
+
+    # التحقق من الاصطدام
+    if (player_x < circle_x < player_x + player_size and
+        player_y < circle_y < player_y + player_size):
+        score += 1
+        circle_x = random.randint(circle_radius, WIDTH - circle_radius)
+        circle_y = random.randint(circle_radius, HEIGHT - circle_radius)
+
+    # الرسم
+    screen.fill(WHITE)
+    pygame.draw.rect(screen, BLUE, (player_x, player_y, player_size, player_size))
+    pygame.draw.circle(screen, RED, (circle_x, circle_y), circle_radius)
+    score_text = font.render(f"النقاط: {score}", True, (0, 0, 0))
+    screen.blit(score_text, (10, 10))
+    pygame.display.flip()
+
+pygame.quit()
